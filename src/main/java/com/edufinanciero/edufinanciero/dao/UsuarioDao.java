@@ -2,18 +2,31 @@ package com.edufinanciero.edufinanciero.dao;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edufinanciero.edufinanciero.model.Usuario;
+import com.edufinanciero.edufinanciero.repository.UsuarioRepository;
 
 @Service
 public class UsuarioDao {
-    private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public List<Usuario> getAll() {
-        String sql = "SELECT * FROM usuario";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Usuario.class));
+        return usuarioRepository.findAll();
+    }
+    
+    public Usuario getById(Long id) {
+        return usuarioRepository.findById(id).orElse(null);
+    }
+    
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+    
+    public void delete(Long id) {
+        usuarioRepository.deleteById(id);
     }
 }

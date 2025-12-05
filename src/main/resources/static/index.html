@@ -1,14 +1,402 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Registro</title>
+    <title>EduFinanciera - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-panel h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .left-panel p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .left-panel .footer {
+            margin-top: auto;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .right-panel {
+            padding: 60px 50px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .right-panel .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .alert-error {
+            background-color: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background-color: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Register Form Styles */
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                padding: 40px 30px;
+            }
+
+            .right-panel {
+                padding: 40px 30px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <div class="left-panel">
+            <div>
+                <h1>
+                    📈 EduFinanciera
+                </h1>
+                <p>Tu compañero inteligente para alcanzar la libertad financiera.</p>
+            </div>
+            <div class="footer">
+                © 2024 EduFinanciera Inc.
+            </div>
+        </div>
 
+        <div class="right-panel">
+            <!-- Login Form -->
+            <div id="loginForm">
+                <h2>Bienvenido de nuevo</h2>
+                <p class="subtitle">Ingresa tus datos para acceder</p>
+
+                <div id="loginError" class="alert alert-error hidden"></div>
+
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Correo Electrónico *</label>
+                        <input type="email" id="loginEmail" placeholder="hola@ejemplo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña *</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn-login">Iniciar Sesión</button>
+                </form>
+
+                <div class="register-link">
+                    ¿No tienes cuenta? <a href="#" onclick="showRegisterForm(event)">Regístrate gratis</a>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="hidden">
+                <h2>Crear cuenta nueva</h2>
+                <p class="subtitle">Ingresa tus datos para registrarte</p>
+
+                <div id="registerError" class="alert alert-error hidden"></div>
+                <div id="registerSuccess" class="alert alert-success hidden"></div>
+
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="registerNombre">Nombre *</label>
+                            <input type="text" id="registerNombre" placeholder="Juan" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerApellido">Apellido *</label>
+                            <input type="text" id="registerApellido" placeholder="Pérez" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">Correo Electrónico *</label>
+                        <input type="email" id="registerEmail" placeholder="hola@ejemplo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña *</label>
+                        <input type="password" id="registerPassword" placeholder="••••••••" required minlength="6">
+                    </div>
+
+                    <button type="submit" class="btn-login">Crear Cuenta</button>
+                </form>
+
+                <div class="register-link">
+                    ¿Ya tienes cuenta? <a href="#" onclick="showLoginForm(event)">Inicia sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8080/api/auth';
+
+        function showRegisterForm(event) {
+            event.preventDefault();
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            clearMessages();
+        }
+
+        function showLoginForm(event) {
+            event.preventDefault();
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            clearMessages();
+        }
+
+        function clearMessages() {
+            document.getElementById('loginError').classList.add('hidden');
+            document.getElementById('registerError').classList.add('hidden');
+            document.getElementById('registerSuccess').classList.add('hidden');
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const correo = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ correo, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.token) {
+                    // Guardar token y datos del usuario
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('usuario', JSON.stringify({
+                        correo: data.correo,
+                        nombre: data.nombre,
+                        apellido: data.apellido,
+                        rol: data.rol
+                    }));
+
+                    // Redirigir al dashboard
+                    window.location.href = '/dashboard.html';
+                } else {
+                    const errorDiv = document.getElementById('loginError');
+                    errorDiv.textContent = data.message || 'Error al iniciar sesión';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                const errorDiv = document.getElementById('loginError');
+                errorDiv.textContent = 'Error de conexión con el servidor';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            const nombre = document.getElementById('registerNombre').value;
+            const apellido = document.getElementById('registerApellido').value;
+            const correo = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre, apellido, correo, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.token) {
+                    // Guardar token y datos del usuario
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('usuario', JSON.stringify({
+                        correo: data.correo,
+                        nombre: data.nombre,
+                        apellido: data.apellido,
+                        rol: data.rol
+                    }));
+
+                    const successDiv = document.getElementById('registerSuccess');
+                    successDiv.textContent = '¡Registro exitoso! Redirigiendo...';
+                    successDiv.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1500);
+                } else {
+                    const errorDiv = document.getElementById('registerError');
+                    errorDiv.textContent = data.message || 'Error al registrarse';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                const errorDiv = document.getElementById('registerError');
+                errorDiv.textContent = 'Error de conexión con el servidor';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+    </script>
 </body>
 
 </html>
