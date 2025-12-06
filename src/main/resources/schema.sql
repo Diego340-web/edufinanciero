@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     apellido VARCHAR(100) NOT NULL,
     correo VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    rol VARCHAR(50) DEFAULT 'USER',
     activo BOOLEAN DEFAULT TRUE,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ultima_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -17,14 +16,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
     INDEX idx_activo (activo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert a default admin user (password: admin123)
-INSERT INTO usuarios (nombre, apellido, correo, password, rol) 
-VALUES ('Admin', 'Sistema', 'admin@edufinanciera.com', 
-        '$2a$10$JM9ab0uIml8f3yY8DFUD/.zffJKR0vfkhKgDQHpFbFagdanZfKX3q', 'ADMIN')
+-- Insert test users (password: test123)
+INSERT INTO usuarios (nombre, apellido, correo, password) 
+VALUES ('Usuario', 'Prueba', 'test@ejemplo.com', 
+        '$2a$10$NoTEbX21/sW6SOj4iUs.euzFnw1c4mvLnIRleoMXn434BU3Bu4TVq')
 ON DUPLICATE KEY UPDATE correo=correo;
 
--- Insert a test user (password: test123)
-INSERT INTO usuarios (nombre, apellido, correo, password, rol) 
-VALUES ('Usuario', 'Prueba', 'test@ejemplo.com', 
-        '$2a$10$NoTEbX21/sW6SOj4iUs.euzFnw1c4mvLnIRleoMXn434BU3Bu4TVq', 'USER')
+INSERT INTO usuarios (nombre, apellido, correo, password) 
+VALUES ('Admin', 'Sistema', 'admin@edufinanciera.com', 
+        '$2a$10$JM9ab0uIml8f3yY8DFUD/.zffJKR0vfkhKgDQHpFbFagdanZfKX3q')
 ON DUPLICATE KEY UPDATE correo=correo;

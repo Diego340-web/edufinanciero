@@ -23,9 +23,6 @@ public class Usuario {
     @Column(nullable = false, length = 255)
     private String password;
     
-    @Column(length = 50)
-    private String rol = "USER";
-    
     @Column(nullable = false)
     private Boolean activo = true;
     
@@ -97,14 +94,6 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public Boolean getActivo() {
         return activo;
     }
@@ -128,10 +117,9 @@ public class Usuario {
     public void setUltimaModificacion(LocalDateTime ultimaModificacion) {
         this.ultimaModificacion = ultimaModificacion;
     }
-
     @Override
     public String toString() {
         return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + 
-               ", correo=" + correo + ", rol=" + rol + ", activo=" + activo + "]";
+               ", correo=" + correo + ", activo=" + activo + "]";
     }
 }

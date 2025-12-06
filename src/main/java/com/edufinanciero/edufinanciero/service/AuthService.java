@@ -42,14 +42,13 @@ public class AuthService {
                 return new AuthResponse("Credenciales incorrectas");
             }
 
-            String token = jwtUtil.generateToken(usuario.getCorreo(), usuario.getRol());
+            String token = jwtUtil.generateToken(usuario.getCorreo());
 
             return new AuthResponse(
                 token,
                 usuario.getCorreo(),
                 usuario.getNombre(),
-                usuario.getApellido(),
-                usuario.getRol()
+                usuario.getApellido()
             );
         } catch (Exception e) {
             return new AuthResponse("Error en el inicio de sesión: " + e.getMessage());
@@ -67,19 +66,17 @@ public class AuthService {
             nuevoUsuario.setApellido(request.getApellido());
             nuevoUsuario.setCorreo(request.getCorreo());
             nuevoUsuario.setPassword(passwordEncoder.encode(request.getPassword()));
-            nuevoUsuario.setRol("USER");
             nuevoUsuario.setActivo(true);
 
             usuarioRepository.save(nuevoUsuario);
 
-            String token = jwtUtil.generateToken(nuevoUsuario.getCorreo(), nuevoUsuario.getRol());
+            String token = jwtUtil.generateToken(nuevoUsuario.getCorreo());
 
             return new AuthResponse(
                 token,
                 nuevoUsuario.getCorreo(),
                 nuevoUsuario.getNombre(),
-                nuevoUsuario.getApellido(),
-                nuevoUsuario.getRol()
+                nuevoUsuario.getApellido()
             );
         } catch (Exception e) {
             return new AuthResponse("Error en el registro: " + e.getMessage());
